@@ -8,6 +8,9 @@
 #include "GL\glew.h"
 #include "GLFW\glfw3.h"
 
+#include "glm\gtx\transform.hpp"
+#include "glm\glm.hpp"
+
 #include <iostream>
 
 #include "Vertice.h"
@@ -22,6 +25,7 @@ GLfloat red, green, blue;
 
 GLuint posicionID;
 GLuint colorID;
+GLuint transformacionesID;
 
 Modelo *figura;
 Modelo *cuadrado;
@@ -42,9 +46,9 @@ void dibujar()
 void inicializarFigura()
 {
 	figura = new Modelo();
-	Vertice v1 = { vec3(-1.0f, 0.5f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) };
-	Vertice v2 = { vec3(0.0f, -0.5f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) };
-	Vertice v3 = { vec3(1.0f, 0.5f, 0.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) };
+	Vertice v1 = { vec4(-1.0f, 0.5f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) };
+	Vertice v2 = { vec4(0.0f, -0.5f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) };
+	Vertice v3 = { vec4(1.0f, 0.5f, 0.0f, 1.0f), vec4(1.0f, 0.0f, 0.0f, 1.0f) };
 
 	figura->vertices.push_back(v1);
 	figura->vertices.push_back(v2);
@@ -53,10 +57,10 @@ void inicializarFigura()
 
 void inicializarCuadrado(){
 	cuadrado = new Modelo();
-	Vertice v1 = { vec3(-0.5f, 0.5f, 0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) };
-	Vertice v2 = { vec3(0.5f, 0.5f, 0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) };
-	Vertice v3 = { vec3(0.5f, -0.5f, 0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) };
-	Vertice v4 = { vec3(-0.5f, -0.5f, 0.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) };
+	Vertice v1 = { vec4(-0.5f, 0.5f, 0.0f, 1.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) };
+	Vertice v2 = { vec4(0.5f, 0.5f, 0.0f, 1.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) };
+	Vertice v3 = { vec4(0.5f, -0.5f, 0.0f, 1.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) };
+	Vertice v4 = { vec4(-0.5f, -0.5f, 0.0f, 1.0f), vec4(0.0f, 1.0f, 0.0f, 1.0f) };
 
 	cuadrado->vertices.push_back(v1);
 	cuadrado->vertices.push_back(v2);
@@ -123,15 +127,16 @@ int main()
 	//Mapeo de atributos
 	posicionID = glGetAttribLocation(shader->getID(), "posicion");
 	colorID = glGetAttribLocation(shader->getID(), "color");
+	transformacionesID = glGetUniformLocation(shader->getID(), "transformaciones");
 
 	//Desenlazar shader
 	shader->desenlazarShader();
 
 	figura->shader = shader;
-	figura->inicializarVertexArray(posicionID, colorID);
+	figura->inicializarVertexArray(posicionID, colorID, transformacionesID);
 
 	cuadrado->shader = shader;
-	cuadrado->inicializarVertexArray(posicionID, colorID);
+	cuadrado->inicializarVertexArray(posicionID, colorID, transformacionesID);
 
 	//Ciclo de Dibujo
 	while (!glfwWindowShouldClose(window))
