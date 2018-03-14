@@ -32,9 +32,36 @@ Modelo *cuadrado;
 
 Shader *shader;
 
+//Declaración de Ventana
+GLFWwindow *window;
+
 void actualizar()
 {
-
+	int estadoDerecha = glfwGetKey(window, GLFW_KEY_RIGHT);
+	if (estadoDerecha == GLFW_PRESS) {
+		cuadrado->transformaciones = translate(cuadrado->transformaciones, vec3(0.001f, 0.0f, 0.0f));
+	}
+	int estadoIzquierda = glfwGetKey(window, GLFW_KEY_LEFT);
+	if (estadoIzquierda == GLFW_PRESS) {
+		cuadrado->transformaciones = translate(cuadrado->transformaciones, vec3(-0.001f, 0.0f, 0.0f));
+	}
+	int estadoX = glfwGetKey(window, GLFW_KEY_X);
+	if (estadoX == GLFW_PRESS) {
+		cuadrado->transformaciones = scale(cuadrado->transformaciones, vec3(1.001f, 1.001f, 1.001f));
+	}
+	int estadoZ = glfwGetKey(window, GLFW_KEY_Z);
+	if (estadoZ == GLFW_PRESS) {
+		cuadrado->transformaciones = scale(cuadrado->transformaciones, vec3(0.999f, 0.999f, 0.999f));
+	}
+	int estadoArriba = glfwGetKey(window, GLFW_KEY_UP);
+	if (estadoArriba == GLFW_PRESS) {
+		cuadrado->transformaciones = rotate(cuadrado->transformaciones, 0.005f, vec3(0.0f, 0.0f, 1.0f));
+	}
+	int estadoAbajo = glfwGetKey(window, GLFW_KEY_DOWN
+	);
+	if (estadoAbajo == GLFW_PRESS) {
+		cuadrado->transformaciones = rotate(cuadrado->transformaciones, 0.005f, vec3(0.0f, 0.0f, -1.0f));
+	}
 }
 
 void dibujar()
@@ -70,9 +97,6 @@ void inicializarCuadrado(){
 
 int main()
 {
-	//Declaración de Ventana
-	GLFWwindow *window;
-	
 	//Propiedades de la ventana
 	GLfloat ancho = 1024;
 	GLfloat alto = 768;
