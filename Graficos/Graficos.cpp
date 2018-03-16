@@ -48,6 +48,11 @@ void actualizar()
 		nave->rotarNave(0);
 	}
 
+	int estadoArriba = glfwGetKey(window, GLFW_KEY_UP);
+	if (estadoArriba == GLFW_PRESS) {
+		nave->moverNave();
+	}
+
 	/*int estadoArriba = glfwGetKey(window, GLFW_KEY_UP);
 	if (estadoArriba == GLFW_PRESS) {
 		nave->transformaciones = translate(nave->transformaciones, vec3(0.0f, 0.001f, 0.0f));
